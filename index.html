@@ -1,0 +1,281 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NOVA | شبكتك الاجتماعية</title>
+<style>
+:root {
+  --bg:#08080d;
+  --panel:#12121b;
+  --border:#282637;
+  --purple:#a855f7;
+  --text:#f5f3ff;
+  --muted:#a5a1b5;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:Arial,sans-serif;
+}
+header{
+  position:sticky;top:0;z-index:5;
+  background:#0b0a12ed;backdrop-filter:blur(15px);
+  border-bottom:1px solid var(--border);
+  padding:16px 5%;display:flex;align-items:center;
+  justify-content:space-between;gap:15px;
+}
+.logo{font-size:28px;font-weight:900;color:#c084fc;letter-spacing:2px}
+header input,.search{
+  background:#171622;border:1px solid var(--border);
+  color:white;padding:12px 15px;border-radius:13px;
+  outline:none;width:100%;max-width:400px;
+}
+button{
+  background:var(--purple);border:0;color:white;
+  border-radius:12px;padding:11px 16px;
+  font-weight:bold;cursor:pointer;
+}
+button:hover{filter:brightness(1.15)}
+.layout{
+  max-width:1200px;margin:25px auto;padding:0 16px;
+  display:grid;grid-template-columns:220px minmax(0,620px) 220px;
+  gap:20px;justify-content:center;
+}
+.panel,.post,.composer{
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:18px;padding:18px;margin-bottom:16px;
+}
+nav a{
+  display:block;padding:14px;color:#ddd7ed;
+  text-decoration:none;border-radius:10px;margin:5px 0;
+}
+nav a:hover{background:#282039;color:#d8b4fe}
+h2{font-size:20px;margin-top:0}
+.muted{color:var(--muted);font-size:13px}
+.hero{
+  padding:28px 22px;border-radius:20px;margin-bottom:20px;
+  background:linear-gradient(135deg,#25123d,#12121d 60%,#30104a);
+  border:1px solid #482568;
+}
+.hero h1{font-size:clamp(28px,5vw,44px);margin:8px 0}
+.hero p{color:#d1c5e4;line-height:1.8}
+.stories{display:flex;gap:12px;overflow:auto;padding:4px 0 18px}
+.story{min-width:76px;text-align:center;font-size:12px}
+.story .avatar{
+  width:60px;height:60px;margin:0 auto 8px;
+  border:2px solid #b36bff;border-radius:50%;
+  display:grid;place-items:center;font-size:25px;
+  background:linear-gradient(135deg,#392054,#15131e);
+}
+.avatar{font-size:25px}
+.post-head{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.post-head .avatar{
+  width:43px;height:43px;display:grid;place-items:center;
+  border-radius:50%;background:#352044;
+}
+.post p{line-height:1.8;white-space:pre-wrap}
+.art{
+  min-height:170px;border-radius:14px;display:grid;
+  place-items:center;text-align:center;margin:12px 0;
+  font-size:clamp(22px,4vw,36px);font-weight:900;
+  background:linear-gradient(135deg,#39165c,#151426,#56246b);
+  padding:20px;
+}
+.art.blue{background:linear-gradient(135deg,#102c54,#151426,#235d72)}
+.art.pink{background:linear-gradient(135deg,#591d48,#20142c,#8b3c66)}
+.actions{display:flex;gap:8px;flex-wrap:wrap;border-top:1px solid var(--border);padding-top:13px}
+.actions button{background:#201b2c;color:#e9d5ff}
+.actions button.active{background:#582b80}
+textarea{
+  width:100%;min-height:100px;resize:vertical;
+  background:#0c0b13;color:white;border:1px solid var(--border);
+  border-radius:12px;padding:14px;font:inherit;outline:none;
+}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px}
+footer{text-align:center;padding:25px;color:var(--muted);font-size:12px}
+.hidden{display:none!important}
+@media(max-width:850px){
+ .layout{grid-template-columns:minmax(0,650px)}
+ aside{display:none}
+ header{padding:12px 4%;flex-wrap:wrap}
+ header input{order:3;max-width:none}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">NOVA✦</div>
+  <input id="globalSearch" placeholder="ابحث عن منشورات..." oninput="renderPosts()">
+  <button onclick="document.getElementById('newPost').scrollIntoView({behavior:'smooth'})">＋ منشور</button>
+</header>
+
+<div class="layout">
+  <aside>
+    <div class="panel">
+      <h2>✦ NOVA</h2>
+      <p class="muted">مساحة تجمع الأفكار والمجتمعات.</p>
+      <nav>
+        <a href="#home">⌂ الرئيسية</a>
+        <a href="#explore">⌕ استكشف</a>
+        <a href="#newPost">＋ إنشاء منشور</a>
+        <a href="#profile">♙ ملفي الشخصي</a>
+      </nav>
+    </div>
+    <div class="panel">
+      <h2>مجتمع NOVA</h2>
+      <p class="muted">شارك أفكارك واكتشف منشورات جديدة.</p>
+    </div>
+  </aside>
+
+  <main id="home">
+    <section class="hero">
+      <div class="muted">مرحبًا بك في عالم جديد</div>
+      <h1>أفكارك تستحق أن تُرى.</h1>
+      <p>اكتشف المحتوى، شارك لحظاتك، وابدأ محادثة جديدة في NOVA.</p>
+      <button onclick="document.getElementById('newPost').scrollIntoView({behavior:'smooth'})">ابدأ النشر ←</button>
+    </section>
+
+    <div class="panel">
+      <h2>القصص</h2>
+      <div class="stories">
+        <div class="story"><div class="avatar">＋</div>قصتك</div>
+        <div class="story"><div class="avatar">🌌</div>ليلى</div>
+        <div class="story"><div class="avatar">🎧</div>آدم</div>
+        <div class="story"><div class="avatar">🎮</div>يوسف</div>
+        <div class="story"><div class="avatar">📸</div>نور</div>
+      </div>
+    </div>
+
+    <section class="composer" id="newPost">
+      <h2>ماذا يدور في ذهنك؟</h2>
+      <textarea id="postText" placeholder="شارك فكرة أو اكتب شيئًا جميلًا..."></textarea>
+      <div class="row" style="margin-top:12px">
+        <span class="muted">منشور جديد على NOVA</span>
+        <button onclick="addPost()">نشر الآن ↗</button>
+      </div>
+    </section>
+
+    <div class="row" id="explore" style="margin:20px 0">
+      <h2>اكتشف المنشورات</h2>
+      <span class="muted">آخر المحتوى</span>
+    </div>
+    <div id="feed"></div>
+    <p id="empty" class="muted hidden">لا توجد منشورات مطابقة لبحثك.</p>
+  </main>
+
+  <aside>
+    <div class="panel">
+      <h2>ملفك الشخصي</h2>
+      <div class="avatar" style="font-size:40px">👤</div>
+      <h3 id="profileName">عضو NOVA</h3>
+      <p class="muted">أهلًا بك في مجتمعنا.</p>
+      <button onclick="editProfile()">تعديل الاسم</button>
+    </div>
+    <div class="panel">
+      <h2>الأكثر انتشارًا</h2>
+      <p>✦ الإبداع</p>
+      <p>🎮 الألعاب</p>
+      <p>📷 التصوير</p>
+      <p>💡 الأفكار</p>
+    </div>
+  </aside>
+</div>
+
+<footer>NOVA © 2026 — مجتمعك، أفكارك، عالمك.</footer>
+
+<script>
+const starterPosts = [
+ {id:1,name:"ليلى",avatar:"🌌",text:"أحيانًا تكون البداية الصغيرة هي أول خطوة نحو شيء عظيم. ✨",art:"كل بداية تحمل احتمالًا جديدًا",color:""},
+ {id:2,name:"آدم",avatar:"🎧",text:"ما الأغنية التي يمكن أن تستمع إليها مرات كثيرة دون أن تمل؟ 🎵",art:"MUSIC • MOOD • MOMENTS",color:"blue"},
+ {id:3,name:"نور",avatar:"📸",text:"خصص لنفسك وقتًا للهدوء والإبداع، فالأفكار الجميلة تحتاج مساحة لتكبر.",art:"اصنع لحظتك الخاصة",color:"pink"}
+];
+
+let posts = load("nova_posts",starterPosts);
+let likes = load("nova_likes",[]);
+let saved = load("nova_saved",[]);
+let profile = load("nova_profile","عضو NOVA");
+
+function load(key,fallback){
+ try{
+   const value=localStorage.getItem(key);
+   return value===null?fallback:JSON.parse(value);
+ }catch(e){return fallback}
+}
+function store(){
+ try{
+  localStorage.setItem("nova_posts",JSON.stringify(posts));
+  localStorage.setItem("nova_likes",JSON.stringify(likes));
+  localStorage.setItem("nova_saved",JSON.stringify(saved));
+  localStorage.setItem("nova_profile",JSON.stringify(profile));
+ }catch(e){}
+}
+function esc(s){
+ return String(s).replace(/[&<>"']/g,c=>({
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+ }[c]));
+}
+function renderPosts(){
+ const q=document.getElementById("globalSearch").value.trim().toLowerCase();
+ const feed=document.getElementById("feed");
+ const filtered=posts.filter(p=>(p.name+" "+p.text+" "+(p.art||"")).toLowerCase().includes(q));
+ feed.innerHTML=filtered.map(p=>`
+ <article class="post">
+  <div class="post-head">
+   <div class="avatar">${esc(p.avatar||"👤")}</div>
+   <div><strong>${esc(p.name)}</strong><div class="muted">عضو في NOVA</div></div>
+  </div>
+  <p>${esc(p.text)}</p>
+  ${p.art?`<div class="art ${esc(p.color||"")}">${esc(p.art)}</div>`:""}
+  <div class="actions">
+   <button class="${likes.includes(p.id)?"active":""}" onclick="toggleLike(${p.id})">♥ ${likes.includes(p.id)?"أعجبني":"إعجاب"}</button>
+   <button class="${saved.includes(p.id)?"active":""}" onclick="toggleSave(${p.id})">${saved.includes(p.id)?"★ محفوظ":"☆ حفظ"}</button>
+   <button onclick="sharePost(${p.id})">↗ مشاركة</button>
+   ${p.mine?`<button onclick="deletePost(${p.id})">حذف</button>`:""}
+  </div>
+ </article>`).join("");
+ document.getElementById("empty").classList.toggle("hidden",filtered.length>0);
+}
+function addPost(){
+ const box=document.getElementById("postText");
+ const text=box.value.trim();
+ if(!text){alert("اكتب شيئًا قبل النشر.");return}
+ posts.unshift({id:Date.now(),name:profile,avatar:"👤",text,art:"",mine:true});
+ box.value="";
+ store();renderPosts();
+}
+function toggleLike(id){
+ likes=likes.includes(id)?likes.filter(x=>x!==id):[...likes,id];
+ store();renderPosts();
+}
+function toggleSave(id){
+ saved=saved.includes(id)?saved.filter(x=>x!==id):[...saved,id];
+ store();renderPosts();
+}
+function deletePost(id){
+ posts=posts.filter(p=>p.id!==id);
+ store();renderPosts();
+}
+function editProfile(){
+ const name=prompt("اكتب الاسم الذي تريد ظهوره:",profile);
+ if(name&&name.trim()){profile=name.trim();store();updateProfile()}
+}
+function updateProfile(){
+ document.getElementById("profileName").textContent=profile;
+}
+async function sharePost(id){
+ const p=posts.find(x=>x.id===id);
+ if(!p)return;
+ const text=p.name+": "+p.text;
+ try{
+  if(navigator.share)await navigator.share({title:"NOVA",text});
+  else if(navigator.clipboard){await navigator.clipboard.writeText(text);alert("تم نسخ نص المنشور.");}
+  else alert(text);
+ }catch(e){}
+}
+updateProfile();
+renderPosts();
+</script>
+</body>
+</html>
